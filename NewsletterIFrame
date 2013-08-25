@@ -1,28 +1,28 @@
 <script type="text/javascript">
     /*!
+    *
+    * ABOUT:
+    *
     * Robert Burridge Studio / Composition Chart Newsletter iFrame pop:
     *
     * http://inqix.com
     * http://www.robertburridge.com
-    *
-    * Copyright 2013, designed & developed by Tajddin Maghni (Inqix)
     * http://blog.inqix.com
     *
-    * Date: 08/23/2013
+    * Developed by Tajddin Maghni (Inqix)
+    *
+    *
+    * DATE: 
+    * 
+    * 08/23/2013
+    *
+    *
+    * INSTRUCTIONS:
+    *
+    * Copy and paste the contents of this script in between the <head/> elements of your page.
+    * Change the value of closeboxImageUrl to the URL to use a different image or if you plan to host your own.
+    *
     */
-    
-    /*!
-    * Instructions:
-    *
-    * Change the value of closeboxImageUrl to the URL of a close box image to change it.
-    * http://www.robertburridge.com
-    *
-    * Copyright 2013, designed & developed by Tajddin Maghni (Inqix)
-    * http://blog.inqix.com
-    *
-    * Date: 08/23/2013
-    */
-    
     
     
     
