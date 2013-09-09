@@ -1,6 +1,6 @@
 RobertBurridgeStudio
 ====================
 
-Place the contents between the <head/> elements of the page.
+Place the contents of the script in the head of the page.
 
-Script parses links and has them open pages in an iframe.
+Script parses links and opens them in an iframe.
