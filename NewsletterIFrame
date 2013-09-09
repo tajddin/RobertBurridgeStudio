@@ -14,25 +14,35 @@
     *
     * DATE: 
     * 
-    * 08/23/2013
+    * 09/09/2013
     *
+    * VERSION:
+    *
+    * 0.4.2
     *
     * INSTRUCTIONS:
     *
     * Copy and paste the contents of this script in between the <head/> elements of your page.
     * Change the value of closeboxImageUrl to the URL to use a different image or if you plan to host your own.
-    *
+    * Add domains to restrictedDomains array to prevent them frombeing loaded in the iframe:
+    * 
     */
-    
-    
-    
+
+
     var closeboxImageUrl = "http://studio.burridge.inqix.com/resources/images/close-button.png";
+
+    // Prevent the following domains and prefixes from being opened in the iframe:
+    var restrictedDomains = ["mailto:", "amazon.com", "msn.com", "yahoo.com"];
+
+
 
 </script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"> </script>
 <script type="text/javascript">
-//Wait until document is ready for interaction:
-    $(document).ready(function(e) {
+
+
+
+    var onload = function (e) {
         //Create the div that will contain the centered iframe:
         var $iframeContainer = $('<div/>').addClass('iframe-container').css({
             position: 'fixed',
@@ -50,7 +60,7 @@
             overflow: 'scroll'
         });
 
-        //Create the close button:
+        // Create the close button:
         var $closeButton = $('<div/>').addClass('close-button').css({
             position: 'fixed',
             top: '20px',
@@ -63,7 +73,7 @@
             pointerEvents: 'none'
         });
 
-        //Create the iframe:
+        // Create the iframe:
         var $iframe = $('<iframe/>').addClass('iframe').prop('src', '').css({
             width: '100%',
             height: '100%'
@@ -74,8 +84,8 @@
         $('body').append($closeButton);
         $iframeContainer.append($iframe);
 
-        //Attach a click event to the close button:
-        $closeButton.on('click', function(e) {
+        // Attach a click event to the close button:
+        $closeButton.on('click', function (e) {
             $iframeContainer.css({
                 transform: 'translate3d(0px, 400px, 0px)',
                 opacity: 0,
@@ -89,13 +99,12 @@
         });
 
 
-        //Attach a click event to each <a> element.
-        $('a').on('click', function(e) {
-
+        // Attach a click event to each <a> element.
+        $('a').on('click', function (e) {
             var $a = $(this);
             var href = $a.prop('href');
-            //Make sure it's not a mailto link:
-            if (href && href.toLowerCase().indexOf('mailto:') == -1) {
+            // Make sure it's a valid and unrestricted link:
+            if (href && !isRestrictedDomain(href)) {
                 $iframe.prop('src', $a.prop('href'));
 
                 $iframeContainer.css({
@@ -113,8 +122,23 @@
                 return false;
             }
 
-
         });
-    });
+    };
+
+    var isRestrictedDomain = function (url) {
+        url = url.toLowerCase();
+        for (var d = 0; d < restrictedDomains.length; d++) {
+            // Determine if url contains restricted domain/prefix/etc:
+            if (restrictedDomains[d] && url.indexOf(restrictedDomains[d].toLowerCase()) > -1) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
+
+    //Wait until document is ready for interaction:
+    $(document).ready(onload);
 
 </script>
