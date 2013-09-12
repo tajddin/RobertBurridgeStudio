@@ -41,88 +41,95 @@
 <script type="text/javascript">
 
 
-
+    var loadComplete = false;
     var onload = function (e) {
-        //Create the div that will contain the centered iframe:
-        var $iframeContainer = $('<div/>').addClass('iframe-container').css({
-            position: 'fixed',
-            left: '20px',
-            top: '20px',
-            bottom: '20px',
-            right: '20px',
-            background: 'gray',
-            opacity: 0,
-            pointerEvents: 'none',
-            transition: 'all .3s ease-in',
-            boxShadow: '0px 2px 20px gray',
-            transform: 'translate3d(0px, 400px, 0px)',
-            '-webkit-overflow-scrolling': 'touch',
-            overflow: 'scroll'
-        });
-
-        // Create the close button:
-        var $closeButton = $('<div/>').addClass('close-button').css({
-            position: 'fixed',
-            top: '20px',
-            right: '20px',
-            width: '80px',
-            height: '80px',
-            background: 'transparent url(' + closeboxImageUrl + ') no-repeat',
-            backgroundSize: 'cover',
-            opacity: 0,
-            pointerEvents: 'none'
-        });
-
-        // Create the iframe:
-        var $iframe = $('<iframe/>').addClass('iframe').prop('src', '').css({
-            width: '100%',
-            height: '100%'
-        });
-
-        $iframe.prop('sandbox', 'allow-same-origin allow-scripts allow-popups allow-forms'); //Add the iframe container, close button and iframe to the document:
-        $('body').append($iframeContainer);
-        $('body').append($closeButton);
-        $iframeContainer.append($iframe);
-
-        // Attach a click event to the close button:
-        $closeButton.on('click', function (e) {
-            $iframeContainer.css({
+        if(!loadComplete){
+            loadComplete = true;
+            
+            //Create the div that will contain the centered iframe:
+            var $iframeContainer = $('<div/>').addClass('iframe-container').css({
+                position: 'fixed',
+                left: '20px',
+                top: '20px',
+                bottom: '20px',
+                right: '20px',
+                background: 'gray',
+                opacity: 0,
+                pointerEvents: 'none',
+                transition: 'all .3s ease-in',
+                boxShadow: '0px 2px 20px gray',
                 transform: 'translate3d(0px, 400px, 0px)',
+                '-webkit-overflow-scrolling': 'touch',
+                overflow: 'scroll'
+            });
+    
+            // Create the close button:
+            var $closeButton = $('<div/>').addClass('close-button').css({
+                position: 'fixed',
+                top: '20px',
+                right: '20px',
+                width: '80px',
+                height: '80px',
+                background: 'transparent url(' + closeboxImageUrl + ') no-repeat',
+                backgroundSize: 'cover',
                 opacity: 0,
                 pointerEvents: 'none'
             });
-
-            $closeButton.css({
-                opacity: 0,
-                pointerEvents: 'none'
+    
+            // Create the iframe:
+            var $iframe = $('<iframe/>').addClass('iframe').prop('src', '').css({
+                width: '100%',
+                height: '100%'
             });
-        });
-
-
-        // Attach a click event to each <a> element.
-        $('a').on('click', function (e) {
-            var $a = $(this);
-            var href = $a.prop('href');
-            // Make sure it's a valid and unrestricted link:
-            if (href && !isRestrictedDomain(href)) {
-                $iframe.prop('src', $a.prop('href'));
-
+    
+            $iframe.prop('sandbox', 'allow-same-origin allow-scripts allow-popups allow-forms'); //Add the iframe container, close button and iframe to the document:
+            $('body').append($iframeContainer);
+            $('body').append($closeButton);
+            $iframeContainer.append($iframe);
+    
+            // Attach a click event to the close button:
+            $closeButton.on('click', function (e) {
                 $iframeContainer.css({
-                    transform: 'translate3d(0px, 0px, 0px)',
-                    opacity: 1,
-                    pointerEvents: 'all'
+                    transform: 'translate3d(0px, 400px, 0px)',
+                    opacity: 0,
+                    pointerEvents: 'none'
                 });
-
+    
                 $closeButton.css({
-                    opacity: 1,
-                    pointerEvents: 'all'
+                    opacity: 0,
+                    pointerEvents: 'none'
                 });
-
-                e.preventDefault();
-                return false;
-            }
-
-        });
+            });
+    
+    
+            // Attach a click event to each <a> element.
+            $('a').on('click', function (e) {
+                var $a = $(this);
+                var href = $a.prop('href');
+                // Make sure it's a valid and unrestricted link:
+                if (href && !isRestrictedDomain(href)) {
+                    $iframe.prop('src', $a.prop('href'));
+    
+                    $iframeContainer.css({
+                        transform: 'translate3d(0px, 0px, 0px)',
+                        opacity: 1,
+                        pointerEvents: 'all'
+                    });
+    
+                    $closeButton.css({
+                        opacity: 1,
+                        pointerEvents: 'all'
+                    });
+    
+                    e.preventDefault();
+                    return false;
+                }
+    
+            });
+            
+        
+        }
+        
     };
 
     var isRestrictedDomain = function (url) {
